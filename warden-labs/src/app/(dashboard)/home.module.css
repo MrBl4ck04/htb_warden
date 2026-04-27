@@ -1,0 +1,296 @@
+.loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 60vh;
+  gap: 16px;
+  color: var(--text-secondary);
+}
+
+.spinner {
+  width: 36px;
+  height: 36px;
+  border: 3px solid var(--border);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+.dashboard {
+  animation: fadeIn 0.4s ease;
+}
+
+/* Hero */
+.hero {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 32px;
+  background: linear-gradient(135deg, var(--bg-card) 0%, rgba(217, 36, 0, 0.04) 100%);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  margin-bottom: 24px;
+}
+
+.heroTitle {
+  font-size: 1.6rem;
+  font-weight: 800;
+}
+
+.heroTitle span {
+  color: var(--accent);
+}
+
+.heroSubtitle {
+  color: var(--text-secondary);
+  margin-top: 4px;
+  font-size: 0.95rem;
+}
+
+.heroStreak {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 24px;
+  background: rgba(255, 152, 0, 0.08);
+  border: 1px solid rgba(255, 152, 0, 0.2);
+  border-radius: var(--radius-lg);
+  color: #FFB300;
+}
+
+.streakNum {
+  font-family: var(--font-heading);
+  font-size: 1.8rem;
+  font-weight: 800;
+  display: block;
+  line-height: 1;
+}
+
+.streakLabel {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  display: block;
+}
+
+/* Stats Grid */
+.statsGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.statCard {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 20px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  transition: border-color var(--transition-fast);
+}
+
+.statCard:hover {
+  border-color: var(--border-hover);
+}
+
+.statIcon {
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.statValue {
+  font-family: var(--font-heading);
+  font-size: 1.5rem;
+  font-weight: 800;
+  display: block;
+  line-height: 1.1;
+}
+
+.statLabel {
+  font-size: 0.78rem;
+  color: var(--text-secondary);
+}
+
+/* Quick Actions */
+.quickActions {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-bottom: 32px;
+}
+
+.actionCard {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 20px 24px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  transition: all var(--transition-fast);
+  text-decoration: none;
+  color: var(--text-primary);
+}
+
+.actionCard:hover {
+  border-color: var(--accent);
+  background: var(--bg-card-hover);
+  transform: translateY(-2px);
+}
+
+.actionCard h3 {
+  font-family: var(--font-heading);
+  font-size: 0.9rem;
+  font-weight: 700;
+  margin-bottom: 2px;
+}
+
+.actionCard p {
+  font-size: 0.78rem;
+  color: var(--text-secondary);
+}
+
+.actionCard > svg:first-child {
+  color: var(--accent);
+  flex-shrink: 0;
+}
+
+.actionCard > svg:last-child {
+  margin-left: auto;
+  color: var(--text-muted);
+  flex-shrink: 0;
+}
+
+/* Sections */
+.section {
+  margin-bottom: 32px;
+}
+
+.sectionTitle {
+  font-size: 1.05rem;
+  font-weight: 700;
+  margin-bottom: 16px;
+  color: var(--text-primary);
+}
+
+/* Paths */
+.pathsList {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.pathItem {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px 20px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  transition: all var(--transition-fast);
+  text-decoration: none;
+  color: var(--text-primary);
+}
+
+.pathItem:hover {
+  border-color: var(--border-hover);
+  background: var(--bg-card-hover);
+}
+
+.pathColorBar {
+  width: 4px;
+  height: 36px;
+  border-radius: 2px;
+  flex-shrink: 0;
+}
+
+.pathInfo h4 {
+  font-family: var(--font-heading);
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.pathWeek {
+  font-size: 0.78rem;
+  color: var(--text-secondary);
+}
+
+.pathProgress {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 160px;
+}
+
+.pathProgress span {
+  font-family: var(--font-heading);
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--text-secondary);
+  min-width: 36px;
+  text-align: right;
+}
+
+.progressBar {
+  flex: 1;
+  height: 6px;
+  background: var(--bg-tertiary);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.progressFill {
+  height: 100%;
+  border-radius: 3px;
+  transition: width var(--transition-slow);
+}
+
+/* OS Grid */
+.osGrid {
+  display: flex;
+  gap: 12px;
+}
+
+.osCard {
+  padding: 16px 24px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  min-width: 100px;
+}
+
+.osName {
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+}
+
+.osCount {
+  font-family: var(--font-heading);
+  font-size: 1.3rem;
+  font-weight: 800;
+}
+
+@media (max-width: 1024px) {
+  .statsGrid { grid-template-columns: repeat(2, 1fr); }
+  .quickActions { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 768px) {
+  .hero { flex-direction: column; gap: 16px; padding: 24px; }
+  .statsGrid { grid-template-columns: 1fr 1fr; }
+  .pathProgress { min-width: 120px; }
+}
