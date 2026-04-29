@@ -79,8 +79,8 @@ async function main() {
     const diffOrder: Record<string, number> = { 'Fácil': 1, 'Media': 2, 'Difícil': 3, 'Insane': 4 };
     certMachines.sort((a, b) => (diffOrder[a.difficulty] || 5) - (diffOrder[b.difficulty] || 5));
 
-    // Create weeks of 4 machines each
-    const machinesPerWeek = 4;
+    // Create weeks of 5 machines each
+    const machinesPerWeek = 5;
     const totalWeeks = Math.ceil(certMachines.length / machinesPerWeek);
     const cappedWeeks = Math.min(totalWeeks, 20); // Max 20 weeks
 

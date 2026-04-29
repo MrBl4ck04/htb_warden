@@ -2,7 +2,7 @@
 
 import { useEffect, useState, use } from 'react';
 import Link from 'next/link';
-import { ArrowLeft, Calendar, Clock, Layers, Lock, CheckCircle, ChevronDown, ChevronUp, Monitor } from 'lucide-react';
+import { ArrowLeft, Calendar, Clock, Layers, Lock, CheckCircle, ChevronDown, ChevronUp, Monitor, X, CircleDot } from 'lucide-react';
 import styles from '../paths.module.css';
 
 interface PathWeekMachine {
@@ -13,6 +13,7 @@ interface PathWeekMachine {
     os: string;
     difficulty: string;
     techniques: string[];
+    certifications: string[];
     completedBy?: { id: string }[];
   };
   orderNum: number;
@@ -40,12 +41,17 @@ interface PathDetail {
   userPaths?: { currentWeek: number; startedAt: string }[];
 }
 
+function getDiffColor(d: string) {
+  switch (d) { case 'Fácil': return '#4CAF50'; case 'Media': return '#FF9800'; case 'Difícil': return '#F44336'; case 'Insane': return '#9C27B0'; default: return '#888'; }
+}
+
 export default function PathDetailPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = use(params);
   const [path, setPath] = useState<PathDetail | null>(null);
   const [loading, setLoading] = useState(true);
   const [expandedWeeks, setExpandedWeeks] = useState<Set<number>>(new Set());
   const [enrolling, setEnrolling] = useState(false);
+  const [selectedMachine, setSelectedMachine] = useState<PathWeekMachine['machine'] | null>(null);
 
   const fetchPath = async () => {
     const res = await fetch(`/api/paths/${slug}`);
@@ -56,7 +62,6 @@ export default function PathDetailPage({ params }: { params: Promise<{ slug: str
   useEffect(() => { fetchPath(); }, [slug]);
 
   const enrolled = path?.userPaths && path.userPaths.length > 0;
-  const currentWeek = enrolled ? path!.userPaths![0].currentWeek : 0;
 
   const toggleWeek = (weekNum: number) => {
     setExpandedWeeks(prev => {
@@ -73,7 +78,8 @@ export default function PathDetailPage({ params }: { params: Promise<{ slug: str
     setEnrolling(false);
   };
 
-  const completeMachine = async (machineId: string) => {
+  const completeMachine = async (machineId: string, e?: React.MouseEvent) => {
+    if (e) e.stopPropagation();
     await fetch(`/api/machines/${machineId}/complete`, { method: 'POST' });
     await fetchPath();
   };
@@ -95,7 +101,6 @@ export default function PathDetailPage({ params }: { params: Promise<{ slug: str
     return 'locked';
   };
 
-  // Calculate overall progress
   const totalMachines = path?.weeks.reduce((acc, w) => acc + w.machines.length, 0) || 0;
   const completedMachines = path?.weeks.reduce((acc, w) =>
     acc + w.machines.filter(wm => wm.machine.completedBy && wm.machine.completedBy.length > 0).length, 0) || 0;
@@ -177,7 +182,9 @@ export default function PathDetailPage({ params }: { params: Promise<{ slug: str
                   {week.machines.map(wm => {
                     const done = wm.machine.completedBy && wm.machine.completedBy.length > 0;
                     return (
-                      <div key={wm.machine.id} className={styles.weekMachine}>
+                      <div key={wm.machine.id} className={styles.weekMachine}
+                        onClick={() => setSelectedMachine(wm.machine)}
+                        style={{ cursor: 'pointer' }}>
                         <div className={`${styles.wmCheck} ${done ? styles.wmDone : ''}`}
                           style={done ? { background: path.color, borderColor: path.color } : {}}>
                           {done && <CheckCircle size={14} />}
@@ -190,11 +197,11 @@ export default function PathDetailPage({ params }: { params: Promise<{ slug: str
                           </div>
                         </div>
                         {done ? (
-                          <button className={styles.wmCompletedBtn} onClick={() => completeMachine(wm.machine.id)}>
+                          <button className={styles.wmCompletedBtn} onClick={(e) => completeMachine(wm.machine.id, e)}>
                             Completada
                           </button>
                         ) : (
-                          <button className={styles.wmCompleteBtn} onClick={() => completeMachine(wm.machine.id)}
+                          <button className={styles.wmCompleteBtn} onClick={(e) => completeMachine(wm.machine.id, e)}
                             style={{ color: path.color, background: `${path.color}10` }}>
                             Completar
                           </button>
@@ -208,6 +215,86 @@ export default function PathDetailPage({ params }: { params: Promise<{ slug: str
           );
         })}
       </div>
+
+      {/* Machine Detail Modal */}
+      {selectedMachine && (
+        <div className={styles.machineModal} onClick={() => setSelectedMachine(null)}>
+          <div className={styles.machineModalCard} onClick={e => e.stopPropagation()}>
+            <div className={styles.machineModalTop} style={{ background: path.color }} />
+            <div className={styles.machineModalHeader}>
+              <div>
+                <h2 className={styles.machineModalName}>{selectedMachine.name}</h2>
+                <p className={styles.machineModalIP}>{selectedMachine.ip}</p>
+              </div>
+              <button className={styles.machineModalClose} onClick={() => setSelectedMachine(null)}>
+                <X size={16} />
+              </button>
+            </div>
+            <div className={styles.machineModalBody}>
+              <div className={styles.machineModalMeta}>
+                <span style={{
+                  display: 'inline-flex', alignItems: 'center', gap: 5,
+                  fontSize: '0.82rem', fontWeight: 600, padding: '4px 10px',
+                  borderRadius: 'var(--radius-full)', background: 'rgba(255,255,255,0.04)',
+                  color: selectedMachine.os === 'Linux' ? 'var(--os-linux)' : 'var(--os-windows)'
+                }}>
+                  <Monitor size={14} /> {selectedMachine.os}
+                </span>
+                <span style={{
+                  fontSize: '0.78rem', fontWeight: 700, padding: '4px 12px',
+                  borderRadius: 'var(--radius-full)', fontFamily: 'var(--font-heading)',
+                  textTransform: 'uppercase' as const, letterSpacing: '0.5px',
+                  color: getDiffColor(selectedMachine.difficulty),
+                  background: `${getDiffColor(selectedMachine.difficulty)}18`
+                }}>
+                  {selectedMachine.difficulty}
+                </span>
+              </div>
+
+              <div className={styles.machineModalSection}>
+                <h3>Técnicas y Temáticas</h3>
+                <div className={styles.machineModalTechList}>
+                  {selectedMachine.techniques.map((t, i) => (
+                    <div key={i} className={styles.machineModalTechItem}>
+                      <CircleDot size={8} style={{ color: path.color, flexShrink: 0, marginTop: 5 }} />
+                      <span>{t}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {selectedMachine.certifications && selectedMachine.certifications.length > 0 && (
+                <div className={styles.machineModalSection}>
+                  <h3>Certificaciones Relacionadas</h3>
+                  <div style={{ display: 'flex', flexWrap: 'wrap', gap: 4 }}>
+                    {selectedMachine.certifications.map(c => (
+                      <span key={c} style={{
+                        fontSize: '0.72rem', fontWeight: 600, padding: '4px 10px',
+                        borderRadius: 'var(--radius-sm)', background: 'rgba(255,255,255,0.04)',
+                        color: 'var(--text-secondary)', border: '1px solid var(--border)'
+                      }}>{c}</span>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              <button
+                className={styles.machineModalCompleteBtn}
+                style={
+                  selectedMachine.completedBy && selectedMachine.completedBy.length > 0
+                    ? { background: 'var(--success-bg)', color: 'var(--success)', borderColor: 'rgba(0,200,81,0.3)' }
+                    : { background: path.color }
+                }
+                onClick={() => completeMachine(selectedMachine.id)}
+              >
+                <CheckCircle size={20} />
+                {selectedMachine.completedBy && selectedMachine.completedBy.length > 0
+                  ? 'Completada' : 'Marcar como Completada'}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

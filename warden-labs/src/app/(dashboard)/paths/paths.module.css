@@ -402,7 +402,120 @@
 
 .enrollBtn:hover { background: var(--accent-hover); box-shadow: var(--shadow-glow); }
 
+/* Machine Detail Modal */
+.machineModal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.7);
+  backdrop-filter: blur(4px);
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  animation: fadeIn 0.2s ease;
+}
+
+.machineModalCard {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  width: 100%;
+  max-width: 520px;
+  max-height: 85vh;
+  overflow-y: auto;
+  animation: fadeIn 0.3s ease;
+}
+
+.machineModalTop { height: 3px; width: 100%; }
+
+.machineModalHeader {
+  padding: 24px 28px 0;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+.machineModalClose {
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border);
+  color: var(--text-secondary);
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-full);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.machineModalClose:hover { background: var(--bg-card-hover); color: var(--text-primary); }
+
+.machineModalName { font-size: 1.4rem; font-weight: 800; }
+.machineModalIP { font-family: var(--font-heading); font-size: 0.85rem; color: var(--text-muted); }
+
+.machineModalBody { padding: 20px 28px 28px; }
+
+.machineModalMeta {
+  display: flex;
+  gap: 10px;
+  margin: 14px 0 20px;
+  flex-wrap: wrap;
+}
+
+.machineModalSection {
+  margin-bottom: 20px;
+}
+
+.machineModalSection h3 {
+  font-family: var(--font-heading);
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 10px;
+}
+
+.machineModalTechList {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.machineModalTechItem {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 0.88rem;
+  color: var(--text-secondary);
+  line-height: 1.4;
+}
+
+.machineModalCompleteBtn {
+  width: 100%;
+  padding: 14px;
+  border-radius: var(--radius-md);
+  font-family: var(--font-heading);
+  font-size: 0.9rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  color: white;
+  border: 1px solid transparent;
+}
+
+.machineModalCompleteBtn:hover { opacity: 0.9; box-shadow: var(--shadow-glow); }
+
 @media (max-width: 768px) {
   .pathsGrid { grid-template-columns: 1fr; }
   .detailMeta { flex-direction: column; gap: 8px; }
+  .machineModalCard { max-width: 100%; margin: 0 8px; }
 }

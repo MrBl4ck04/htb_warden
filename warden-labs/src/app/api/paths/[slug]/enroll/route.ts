@@ -35,7 +35,8 @@ export async function POST(
     });
 
     return NextResponse.json({ message: 'Inscripción exitosa' }, { status: 201 });
-  } catch {
+  } catch (error) {
+    console.error('Error enrolling:', error);
     return NextResponse.json({ error: 'Error al inscribirse' }, { status: 500 });
   }
 }

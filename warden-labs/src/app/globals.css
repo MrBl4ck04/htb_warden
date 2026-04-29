@@ -1,22 +1,22 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700;800&display=swap');
 
 :root {
-  --bg-primary: #000000;
-  --bg-secondary: #0a0a0a;
-  --bg-tertiary: #111111;
-  --bg-card: #0d0d0d;
-  --bg-card-hover: #151515;
-  --bg-input: #0f0f0f;
+  --bg-primary: #141722;
+  --bg-secondary: #1a1e2e;
+  --bg-tertiary: #212538;
+  --bg-card: #1c2033;
+  --bg-card-hover: #252a40;
+  --bg-input: #181c2a;
 
   --accent: #D92400;
   --accent-hover: #FF3D1A;
   --accent-glow: rgba(217, 36, 0, 0.25);
   --accent-subtle: rgba(217, 36, 0, 0.08);
 
-  --text-primary: #F7F0D6;
-  --text-secondary: #9A9A9A;
-  --text-muted: #555555;
-  --text-inverse: #000000;
+  --text-primary: #E4DFC8;
+  --text-secondary: #A8ACB8;
+  --text-muted: #636878;
+  --text-inverse: #141722;
 
   --success: #00C851;
   --success-bg: rgba(0, 200, 81, 0.1);
@@ -25,8 +25,8 @@
   --error: #FF3D3D;
   --info: #448AFF;
 
-  --border: #1a1a1a;
-  --border-hover: #2a2a2a;
+  --border: #282d42;
+  --border-hover: #353b54;
   --border-focus: #D92400;
 
   --diff-easy: #4CAF50;
